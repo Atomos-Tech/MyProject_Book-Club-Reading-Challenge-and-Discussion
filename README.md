@@ -32,6 +32,5 @@ Submission repository: [Atomos-Tech/MyProject_Book-Club-Reading-Challenge-and-Di
 ## Document conventions
 
 - Markdown files are the accessible, version-controlled source of record.
-- Existing PDF and Pages files are retained as submitted evidence and editable source material.
+- Verified PDF files are retained as submission-ready visual evidence.
 - Jira evidence is maintained separately by the student, as requested, and is not modified by this repository update.
-

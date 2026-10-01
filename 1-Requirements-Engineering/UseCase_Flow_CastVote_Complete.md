@@ -41,7 +41,7 @@ This flow begins at main step 5.
 1. The system finds an existing vote for the same member and poll.
 2. The system rejects the new submission.
 3. The existing vote and every candidate tally remain unchanged.
-4. The system displays: **You have already voted in this poll.**
+4. The system displays: **A vote has already been recorded for this account.**
 5. The use case ends without recording another vote.
 
 ## Alternate flow A2 Poll closes before confirmation
@@ -73,4 +73,3 @@ This flow begins at main step 6.
 
 - No additional vote is recorded.
 - Existing votes and tallies remain unchanged.
-

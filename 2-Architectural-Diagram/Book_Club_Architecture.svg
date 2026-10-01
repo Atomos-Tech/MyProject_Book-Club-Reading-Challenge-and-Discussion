@@ -1,101 +1,98 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
-  <title id="title">Book Club Reading Challenge and Discussion Portal Architecture</title>
-  <desc id="desc">A layered architecture showing users, web interface, application API, business services, database, monitoring, and backup.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920" role="img" aria-labelledby="title desc">
+  <title id="title">Book Club Portal Architecture</title>
+  <desc id="desc">A clean layered architecture from actors through the interface, API, business modules, database, monitoring, and backup.</desc>
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
     </marker>
     <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.13"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.12"/>
     </filter>
     <style>
-      .title { font: 700 34px Inter, Arial, sans-serif; fill: #0f172a; }
-      .subtitle { font: 400 18px Inter, Arial, sans-serif; fill: #475569; }
-      .label { font: 700 18px Inter, Arial, sans-serif; fill: #0f172a; }
-      .small { font: 400 14px Inter, Arial, sans-serif; fill: #475569; }
-      .section { font: 700 16px Inter, Arial, sans-serif; fill: #334155; letter-spacing: 1px; }
-      .line { stroke: #334155; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
-      .dash { stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+      .title { font: 700 35px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #475569; }
+      .heading { font: 700 19px Arial, sans-serif; fill: #0f172a; }
+      .body { font: 400 15px Arial, sans-serif; fill: #475569; }
+      .section { font: 700 15px Arial, sans-serif; fill: #334155; letter-spacing: 1px; }
+      .arrow { stroke: #334155; stroke-width: 2.7; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 2.3; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
     </style>
   </defs>
 
-  <rect width="1400" height="900" fill="#f8fafc"/>
-  <text x="700" y="55" text-anchor="middle" class="title">Book Club Portal Architecture</text>
-  <text x="700" y="87" text-anchor="middle" class="subtitle">Layered modular design with secure, persistent business services</text>
+  <rect width="1500" height="920" fill="#f8fafc"/>
+  <text x="750" y="52" text-anchor="middle" class="title">Book Club Portal Architecture</text>
+  <text x="750" y="82" text-anchor="middle" class="subtitle">Layered modular design with secure and durable data handling</text>
 
-  <text x="60" y="142" class="section">ACTORS</text>
-  <rect x="45" y="165" width="210" height="92" rx="16" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
-  <text x="150" y="202" text-anchor="middle" class="label">Club Member</text>
-  <text x="150" y="228" text-anchor="middle" class="small">Goals, discussions, voting</text>
-  <rect x="45" y="283" width="210" height="92" rx="16" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
-  <text x="150" y="320" text-anchor="middle" class="label">Discussion Lead</text>
-  <text x="150" y="346" text-anchor="middle" class="small">Monthly poll management</text>
-  <rect x="45" y="401" width="210" height="92" rx="16" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
-  <text x="150" y="438" text-anchor="middle" class="label">Administrator</text>
-  <text x="150" y="464" text-anchor="middle" class="small">Membership management</text>
+  <text x="55" y="138" class="section">ACTORS</text>
+  <rect x="45" y="165" width="205" height="84" rx="15" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
+  <text x="147" y="199" text-anchor="middle" class="heading">Club Member</text>
+  <text x="147" y="224" text-anchor="middle" class="body">Goals, discussion, voting</text>
+  <rect x="45" y="280" width="205" height="84" rx="15" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
+  <text x="147" y="314" text-anchor="middle" class="heading">Discussion Lead</text>
+  <text x="147" y="339" text-anchor="middle" class="body">Poll management</text>
+  <rect x="45" y="395" width="205" height="84" rx="15" fill="#ffffff" stroke="#94a3b8" filter="url(#shadow)"/>
+  <text x="147" y="429" text-anchor="middle" class="heading">Administrator</text>
+  <text x="147" y="454" text-anchor="middle" class="body">Membership control</text>
 
-  <text x="330" y="142" class="section">PRESENTATION</text>
-  <rect x="315" y="165" width="250" height="328" rx="20" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
-  <text x="440" y="224" text-anchor="middle" class="label">Responsive Web UI</text>
-  <text x="440" y="260" text-anchor="middle" class="small">Reading dashboard</text>
-  <text x="440" y="292" text-anchor="middle" class="small">Discussion threads</text>
-  <text x="440" y="324" text-anchor="middle" class="small">Spoiler reveal control</text>
-  <text x="440" y="356" text-anchor="middle" class="small">Monthly poll</text>
-  <text x="440" y="388" text-anchor="middle" class="small">Role-based administration</text>
-  <text x="440" y="440" text-anchor="middle" class="small">HTTPS and accessible validation</text>
+  <text x="320" y="138" class="section">PRESENTATION</text>
+  <rect x="305" y="165" width="225" height="314" rx="20" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="417" y="213" text-anchor="middle" class="heading">Responsive Web UI</text>
+  <text x="417" y="257" text-anchor="middle" class="body">Reading dashboard</text>
+  <text x="417" y="290" text-anchor="middle" class="body">Discussion threads</text>
+  <text x="417" y="323" text-anchor="middle" class="body">Spoiler controls</text>
+  <text x="417" y="356" text-anchor="middle" class="body">Monthly poll</text>
+  <text x="417" y="389" text-anchor="middle" class="body">Administration</text>
+  <text x="417" y="438" text-anchor="middle" class="body">HTTPS and validation</text>
 
-  <text x="640" y="142" class="section">APPLICATION</text>
-  <rect x="625" y="165" width="260" height="92" rx="18" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
-  <text x="755" y="205" text-anchor="middle" class="label">Application API</text>
-  <text x="755" y="232" text-anchor="middle" class="small">Validation and coordination</text>
+  <text x="600" y="138" class="section">APPLICATION API</text>
+  <rect x="585" y="165" width="225" height="314" rx="20" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="697" y="213" text-anchor="middle" class="heading">Application API</text>
+  <text x="697" y="257" text-anchor="middle" class="body">Request validation</text>
+  <text x="697" y="290" text-anchor="middle" class="body">Authentication</text>
+  <text x="697" y="323" text-anchor="middle" class="body">Role authorization</text>
+  <text x="697" y="356" text-anchor="middle" class="body">Transaction control</text>
+  <text x="697" y="389" text-anchor="middle" class="body">Error handling</text>
+  <text x="697" y="438" text-anchor="middle" class="body">Stable service interface</text>
 
-  <rect x="625" y="291" width="260" height="72" rx="14" fill="#ffffff" stroke="#8b5cf6"/>
-  <text x="755" y="322" text-anchor="middle" class="label">Authentication</text>
-  <text x="755" y="346" text-anchor="middle" class="small">Identity and role checks</text>
-  <rect x="625" y="385" width="260" height="72" rx="14" fill="#ffffff" stroke="#8b5cf6"/>
-  <text x="755" y="416" text-anchor="middle" class="label">Reading Challenge</text>
-  <text x="755" y="440" text-anchor="middle" class="small">Goals and progress</text>
-  <rect x="625" y="479" width="260" height="72" rx="14" fill="#ffffff" stroke="#8b5cf6"/>
-  <text x="755" y="510" text-anchor="middle" class="label">Discussion Service</text>
-  <text x="755" y="534" text-anchor="middle" class="small">Comments and spoilers</text>
-  <rect x="625" y="573" width="260" height="72" rx="14" fill="#ffffff" stroke="#8b5cf6"/>
-  <text x="755" y="604" text-anchor="middle" class="label">Monthly Poll Service</text>
-  <text x="755" y="628" text-anchor="middle" class="small">Polls and one-vote rule</text>
-  <rect x="625" y="667" width="260" height="72" rx="14" fill="#ffffff" stroke="#8b5cf6"/>
-  <text x="755" y="698" text-anchor="middle" class="label">Membership Admin</text>
-  <text x="755" y="722" text-anchor="middle" class="small">Member lifecycle</text>
+  <text x="880" y="138" class="section">BUSINESS MODULES</text>
+  <rect x="865" y="165" width="265" height="314" rx="20" fill="#ffffff" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="997" y="207" text-anchor="middle" class="heading">Business Modules</text>
+  <rect x="890" y="232" width="215" height="42" rx="10" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="997" y="259" text-anchor="middle" class="body">Reading Challenge</text>
+  <rect x="890" y="289" width="215" height="42" rx="10" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="997" y="316" text-anchor="middle" class="body">Discussion and Spoilers</text>
+  <rect x="890" y="346" width="215" height="42" rx="10" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="997" y="373" text-anchor="middle" class="body">Monthly Poll and Voting</text>
+  <rect x="890" y="403" width="215" height="42" rx="10" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="997" y="430" text-anchor="middle" class="body">Membership Administration</text>
 
-  <text x="970" y="142" class="section">DATA AND OPERATIONS</text>
-  <path d="M1005 190 C1005 160, 1245 160, 1245 190 L1245 410 C1245 440, 1005 440, 1005 410 Z" fill="#dcfce7" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
-  <ellipse cx="1125" cy="190" rx="120" ry="30" fill="#bbf7d0" stroke="#22c55e" stroke-width="2"/>
-  <text x="1125" y="265" text-anchor="middle" class="label">Relational Database</text>
-  <text x="1125" y="304" text-anchor="middle" class="small">Users and memberships</text>
-  <text x="1125" y="332" text-anchor="middle" class="small">Goals and progress logs</text>
-  <text x="1125" y="360" text-anchor="middle" class="small">Comments, polls and votes</text>
-  <text x="1125" y="397" text-anchor="middle" class="small">Unique (member, poll) vote key</text>
+  <text x="1195" y="138" class="section">DATA</text>
+  <path d="M1170 198 C1170 163, 1430 163, 1430 198 L1430 446 C1430 481, 1170 481, 1170 446 Z" fill="#dcfce7" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <ellipse cx="1300" cy="198" rx="130" ry="35" fill="#bbf7d0" stroke="#22c55e" stroke-width="2"/>
+  <text x="1300" y="277" text-anchor="middle" class="heading">Relational Database</text>
+  <text x="1300" y="321" text-anchor="middle" class="body">Users and memberships</text>
+  <text x="1300" y="354" text-anchor="middle" class="body">Goals and progress</text>
+  <text x="1300" y="387" text-anchor="middle" class="body">Comments, polls and votes</text>
+  <text x="1300" y="430" text-anchor="middle" class="body">Unique member-and-poll key</text>
 
-  <rect x="1005" y="500" width="240" height="92" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
-  <text x="1125" y="538" text-anchor="middle" class="label">Monitoring</text>
-  <text x="1125" y="565" text-anchor="middle" class="small">Health, errors and uptime</text>
-  <rect x="1005" y="640" width="240" height="92" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
-  <text x="1125" y="678" text-anchor="middle" class="label">Backup and Recovery</text>
-  <text x="1125" y="705" text-anchor="middle" class="small">Scheduled durable backups</text>
+  <path d="M250 207 H305" class="arrow"/>
+  <path d="M250 322 H305" class="arrow"/>
+  <path d="M250 437 H305" class="arrow"/>
+  <path d="M530 322 H585" class="arrow"/>
+  <path d="M810 322 H865" class="arrow"/>
+  <path d="M1130 322 H1170" class="arrow"/>
 
-  <path d="M255 211 L315 250" class="line"/>
-  <path d="M255 329 L315 329" class="line"/>
-  <path d="M255 447 L315 408" class="line"/>
-  <path d="M565 329 L625 211" class="line"/>
-  <path d="M755 257 L755 291" class="line"/>
-  <path d="M885 327 L1005 250" class="line"/>
-  <path d="M885 421 L1005 292" class="line"/>
-  <path d="M885 515 L1005 334" class="line"/>
-  <path d="M885 609 L1005 376" class="line"/>
-  <path d="M885 703 L1005 410" class="line"/>
-  <path d="M885 211 L1005 546" class="dash"/>
-  <path d="M1125 440 L1125 500" class="dash"/>
-  <path d="M1125 440 L1125 640" class="dash"/>
+  <text x="585" y="557" class="section">OPERATIONS</text>
+  <rect x="585" y="580" width="225" height="100" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="697" y="621" text-anchor="middle" class="heading">Monitoring</text>
+  <text x="697" y="650" text-anchor="middle" class="body">Health, errors and uptime</text>
+  <rect x="1170" y="580" width="260" height="100" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1300" y="621" text-anchor="middle" class="heading">Backup and Recovery</text>
+  <text x="1300" y="650" text-anchor="middle" class="body">Scheduled durable backups</text>
+  <path d="M697 479 V580" class="dash"/>
+  <path d="M1300 481 V580" class="dash"/>
 
-  <rect x="45" y="790" width="1200" height="70" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
-  <text x="70" y="820" class="label">Primary integrity rule</text>
-  <text x="70" y="846" class="small">The poll service records votes transactionally and the database enforces one vote per member per poll.</text>
+  <rect x="45" y="760" width="1385" height="100" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="75" y="799" class="heading">Primary integrity rule</text>
+  <text x="75" y="832" class="body">Vote records use a single transaction, while the database enforces one vote for each member-and-poll pair.</text>
 </svg>
