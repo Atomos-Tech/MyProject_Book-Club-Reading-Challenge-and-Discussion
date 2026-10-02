@@ -1,9 +1,14 @@
-# Architectural Diagram
+# Book Club Component Architecture
 
-This folder describes the proposed logical architecture for the Book Club Reading Challenge and Discussion Portal.
+Lab 3 submission for Problem Statement 55, Book Club Reading Challenge and Discussion Portal.
 
-- [Book_Club_Architecture.svg](Book_Club_Architecture.svg) — submission-ready architectural diagram.
-- [Architecture_Overview.md](Architecture_Overview.md) — component responsibilities, data flow, and quality-attribute decisions.
+Layered architecture separates Presentation, Business, and Data responsibilities. The diagram contains seven components and nine named provided/required interface assemblies. The Business components belong to one modular server application, not independently deployed microservices.
 
-The design uses a layered modular architecture. A browser-based client calls a single application API. The API delegates work to focused services and persists records in a relational database. Authentication and authorization guard all protected operations, while monitoring and backup support availability and recovery.
+| File | Purpose |
+|---|---|
+| [Book_Club_Component_Diagram.pdf](Book_Club_Component_Diagram.pdf) | Single-page UML component diagram with ports, ball-and-socket notation, technology labels, and interaction flow. |
+| [Architectural_Justification.docx](Architectural_Justification.docx) | One-page Word justification covering the choice, two project-specific reasons, security, and performance. |
+| [Architectural_Justification.pdf](Architectural_Justification.pdf) | PDF export of the same Word justification. |
+| [Architecture_Overview.md](Architecture_Overview.md) | Scenario review, architectural style comparison, components, interface contracts, interactions, and requirement coverage. |
 
+These documents describe proposed architecture. Implementation, load testing, and uptime measurement remain separate activities.
