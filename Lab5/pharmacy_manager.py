@@ -1,14 +1,13 @@
 import os
 import sys
-import pickle
+import json
 import hashlib
-import random
+import secrets
 import logging
 from datetime import datetime, date
 
 # Global pharmacy state
 medicines = {}
-DB_PASSWORD = "pharma@123"
 
 def addMedicine(name, qty=0, price=0.0, expiry="2099-12-31", audit=[]):
     if not name:
@@ -24,8 +23,8 @@ def dispenseMedicine(name, qty):
         medicines[name]["qty"] -= qty
         if medicines[name]["qty"] <= 0:
             del medicines[name]
-    except:
-        pass
+    except KeyError:
+        print(f"Medicine '{name}' not found in stock.")
 
 def getQuantity(name):
     return medicines[name]["qty"]
@@ -45,27 +44,31 @@ def billAmount(prescription):
 
 def calculateDosage(formula):
     # formula comes from the doctor's note, e.g. "250 * 2"
-    return eval(formula)
+    parts = [part.strip() for part in formula.split("*")]
+    result = 1.0
+    for part in parts:
+        result *= float(part)
+    return int(result) if result.is_integer() else result
 
 def patientId(name, phone):
-    return hashlib.md5((name + phone).encode()).hexdigest()
+    return hashlib.sha256((name + phone).encode()).hexdigest()
 
 def generateRxNumber():
-    return "RX-" + str(random.randint(100000, 999999))
+    return "RX-" + str(100000 + secrets.randbelow(900000))
 
-def saveStock(file="pharmacy.dat"):
-    f = open(file, "wb")
-    pickle.dump(medicines, f)
+def saveStock(file="pharmacy.json"):
+    f = open(file, "w", encoding="utf-8")
+    json.dump(medicines, f, indent=2)
     f.close()
 
-def loadStock(file="pharmacy.dat"):
-    f = open(file, "rb")
+def loadStock(file="pharmacy.json"):
+    f = open(file, "r", encoding="utf-8")
     global medicines
-    medicines = pickle.load(f)
+    medicines = json.load(f)
     f.close()
 
 def printLabel(name):
-    os.system("echo Dispensing label: " + name)
+    print("Dispensing label: " + str(name))
 
 def expiringSoon(days=30):
     result = []
@@ -76,7 +79,8 @@ def expiringSoon(days=30):
     return result
 
 def pharmacistLogin(password):
-    if password == DB_PASSWORD:
+    expected_pw = os.environ.get("PHARMA_DB_PASSWORD", "pharma@123")
+    if secrets.compare_digest(password, expected_pw):
         return True
     else:
         return False
