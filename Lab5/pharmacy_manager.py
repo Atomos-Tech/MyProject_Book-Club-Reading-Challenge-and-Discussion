@@ -1,24 +1,31 @@
+"""Pharmacy stock and billing management module."""
 import os
-import sys
 import json
 import hashlib
 import secrets
-import logging
 from datetime import datetime, date
 
 # Global pharmacy state
 medicines = {}
 
-def addMedicine(name, qty=0, price=0.0, expiry="2099-12-31", audit=[]):
-    if not name:
-        return
+def add_medicine(name, qty=0, price=0.0, expiry="2099-12-31", audit=None):
+    """Add medicine stock after validating name, quantity, and price."""
+    if audit is None:
+        audit = []
+    if not isinstance(name, str) or not name.strip():
+        return audit
+    if not isinstance(qty, int) or qty <= 0 or price < 0:
+        return audit
     if name not in medicines:
-        medicines[name] = {"qty": 0, "price": price, "expiry": expiry}
-    medicines[name]["qty"] = medicines[name]["qty"] + qty
-    audit.append("%s: Stocked %d units of %s" % (str(datetime.now()), qty, name))
+        medicines[name] = {"qty": 0, "price": float(price), "expiry": expiry}
+    medicines[name]["qty"] += qty
+    audit.append(f"{datetime.now()}: Stocked {qty} units of {name}")
     return audit
 
-def dispenseMedicine(name, qty):
+def dispense_medicine(name, qty):
+    """Dispense a specified quantity of medicine from stock."""
+    if not isinstance(qty, int) or qty <= 0:
+        return
     try:
         medicines[name]["qty"] -= qty
         if medicines[name]["qty"] <= 0:
@@ -26,87 +33,96 @@ def dispenseMedicine(name, qty):
     except KeyError:
         print(f"Medicine '{name}' not found in stock.")
 
-def getQuantity(name):
-    return medicines[name]["qty"]
+def get_quantity(name):
+    """Return the available stock quantity for a medicine."""
+    return medicines.get(name, {}).get("qty", 0)
 
-def isExpired(name):
-    exp = datetime.strptime(medicines[name]["expiry"], "%Y-%m-%d").date()
-    if exp < date.today():
-        return True
-    else:
+def is_expired(name):
+    """Check whether a medicine has passed its expiry date."""
+    if name not in medicines:
         return False
+    exp = datetime.strptime(medicines[name]["expiry"], "%Y-%m-%d").date()
+    return exp < date.today()
 
-def billAmount(prescription):
-    total = 0
-    for item in prescription:
-        total = total + medicines[item[0]]["price"] * item[1]
+def bill_amount(prescription):
+    """Calculate total bill amount for a list of (medicine, qty) items."""
+    total = 0.0
+    for item_name, qty in prescription:
+        if item_name in medicines and qty > 0:
+            total += medicines[item_name]["price"] * qty
     return total
 
-def calculateDosage(formula):
-    # formula comes from the doctor's note, e.g. "250 * 2"
+def calculate_dosage(formula):
+    """Safely evaluate a dosage multiplication formula like '250 * 2'."""
     parts = [part.strip() for part in formula.split("*")]
     result = 1.0
     for part in parts:
         result *= float(part)
     return int(result) if result.is_integer() else result
 
-def patientId(name, phone):
+def patient_id(name, phone):
+    """Generate a SHA-256 hash identifier for a patient."""
     return hashlib.sha256((name + phone).encode()).hexdigest()
 
-def generateRxNumber():
-    return "RX-" + str(100000 + secrets.randbelow(900000))
+def generate_rx_number():
+    """Generate a cryptographically random prescription number."""
+    return f"RX-{100000 + secrets.randbelow(900000)}"
 
-def saveStock(file="pharmacy.json"):
-    f = open(file, "w", encoding="utf-8")
-    json.dump(medicines, f, indent=2)
-    f.close()
+def save_stock(file_path="pharmacy.json"):
+    """Save the current medicine stock dictionary to a JSON file."""
+    with open(file_path, "w", encoding="utf-8") as file_handle:
+        json.dump(medicines, file_handle, indent=2)
 
-def loadStock(file="pharmacy.json"):
-    f = open(file, "r", encoding="utf-8")
-    global medicines
-    medicines = json.load(f)
-    f.close()
+def load_stock(file_path="pharmacy.json"):
+    """Load medicine stock data from a JSON file into memory."""
+    with open(file_path, "r", encoding="utf-8") as file_handle:
+        loaded_data = json.load(file_handle)
+    medicines.clear()
+    medicines.update(loaded_data)
 
-def printLabel(name):
-    print("Dispensing label: " + str(name))
+def print_label(name):
+    """Print a dispensing label for the given medicine."""
+    print(f"Dispensing label: {name}")
 
-def expiringSoon(days=30):
+def expiring_soon(days=30):
+    """Return a list of medicines expiring within the given number of days."""
     result = []
-    for m in medicines:
-        exp = datetime.strptime(medicines[m]["expiry"], "%Y-%m-%d").date()
+    for med_name, details in medicines.items():
+        exp = datetime.strptime(details["expiry"], "%Y-%m-%d").date()
         if (exp - date.today()).days < days:
-            result.append(m)
+            result.append(med_name)
     return result
 
-def pharmacistLogin(password):
+def pharmacist_login(password):
+    """Verify pharmacist login password against configured credentials."""
     expected_pw = os.environ.get("PHARMA_DB_PASSWORD", "pharma@123")
-    if secrets.compare_digest(password, expected_pw):
-        return True
-    else:
-        return False
+    return secrets.compare_digest(password, expected_pw)
 
-def printStock():
+def print_stock():
+    """Display the current pharmacy stock report."""
     print("===== Pharmacy Stock Report =====")
-    for m in medicines:
-        print(m, "->", medicines[m]["qty"], "units, Rs.", medicines[m]["price"], "exp", medicines[m]["expiry"])
+    for med_name, details in medicines.items():
+        print(f"{med_name} -> {details['qty']} units, Rs. {details['price']} exp {details['expiry']}")
 
 def main():
-    addMedicine("Paracetamol 500mg", 200, 1.5, "2027-06-30")
-    addMedicine("Amoxicillin 250mg", 40, 6.0, "2026-01-15")
-    addMedicine("Cetirizine 10mg", -10, 2.0, "2027-03-31")
-    addMedicine(404, 25)  # numeric name, no type check
-    dispenseMedicine("Paracetamol 500mg", 30)
-    dispenseMedicine("Insulin", 2)
-    print("Paracetamol stock:", getQuantity("Paracetamol 500mg"))
-    print("Amoxicillin expired?", isExpired("Amoxicillin 250mg"))
-    print("Bill:", billAmount([("Paracetamol 500mg", 10), ("Amoxicillin 250mg", 5)]))
-    print("Dosage (mg/day):", calculateDosage("250 * 2"))
-    print("Patient ID:", patientId("Asha", "9876543210"))
-    print("Rx number:", generateRxNumber())
-    print("Login:", pharmacistLogin("pharma@123"))
-    printLabel("Paracetamol 500mg")
-    saveStock()
-    loadStock()
-    printStock()
+    """Run a demonstration of the pharmacy management operations."""
+    add_medicine("Paracetamol 500mg", 200, 1.5, "2027-06-30")
+    add_medicine("Amoxicillin 250mg", 40, 6.0, "2026-01-15")
+    add_medicine("Cetirizine 10mg", -10, 2.0, "2027-03-31")
+    add_medicine(404, 25)  # numeric name, rejected by type check
+    dispense_medicine("Paracetamol 500mg", 30)
+    dispense_medicine("Insulin", 2)
+    print("Paracetamol stock:", get_quantity("Paracetamol 500mg"))
+    print("Amoxicillin expired?", is_expired("Amoxicillin 250mg"))
+    print("Bill:", bill_amount([("Paracetamol 500mg", 10), ("Amoxicillin 250mg", 5)]))
+    print("Dosage (mg/day):", calculate_dosage("250 * 2"))
+    print("Patient ID:", patient_id("Asha", "9876543210"))
+    print("Rx number:", generate_rx_number())
+    print("Login:", pharmacist_login("pharma@123"))
+    print_label("Paracetamol 500mg")
+    save_stock()
+    load_stock()
+    print_stock()
 
-main()
+if __name__ == "__main__":
+    main()
